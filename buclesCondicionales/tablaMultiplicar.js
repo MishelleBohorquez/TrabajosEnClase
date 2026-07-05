@@ -1,3 +1,3 @@
-for (let i = 1; i <= 10; i++) {
-    console.log(`7 x ${i} = ${7 * i}`);
+for (let num = 1; num <= 10; num++){
+    console.log(" 7 * " + num , "="  , 7 * num);
 }
