@@ -60,7 +60,62 @@ function obtenerStat(datos, nombreStat) {
 
 }
 
+async function compararPokemon(nombre1, nombre2, stat) {
 
+    const pokemon1 = await buscarPokemon(nombre1);
+    const pokemon2 = await buscarPokemon(nombre2);
+
+    if (pokemon1 == null || pokemon2 == null) {
+        return;
+    }
+
+    const valor1 = obtenerStat(pokemon1, stat);
+    const valor2 = obtenerStat(pokemon2, stat);
+
+    if (valor1 == null || valor2 == null) {
+        console.log("La stat no existe.");
+        return;
+    }
+
+    console.log("\nComparando", stat);
+
+    if (valor1 > valor2) {
+        console.log(pokemon1.name, "gana.");
+    } else if (valor2 > valor1) {
+        console.log(pokemon2.name, "gana.");
+    } else {
+        console.log("Empate.");
+    }
+
+}
+
+async function pokemonMasFuerte(listaNombres, stat) {
+
+    let mejorNombre = "";
+    let mejorValor = -1;
+
+    for (let nombre of listaNombres) {
+        const pokemon = await buscarPokemon(nombre);
+        if (pokemon == null) {
+            continue;
+        }
+
+        const valor = obtenerStat(pokemon, stat);
+        if (valor == null) {
+            continue;
+        }
+
+        if (valor > mejorValor) {
+            mejorValor = valor;
+            mejorNombre = pokemon.name;
+        }
+
+    }
+
+    console.log("Ganador en", stat + ":", mejorNombre);
+    return mejorNombre;
+
+}
 
 async function prueba() {
 
