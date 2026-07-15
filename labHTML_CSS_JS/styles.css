@@ -16,14 +16,12 @@ body {
 }
 
 #contador {
-  background-color: #f0f1f5;
-  border-radius: 16px;
-  padding: 40px;
-  max-width: 500px;
-  width: 100%;
-  color: #eee;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-
+    background-color: #494f6b;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    color: #eee;
 }
 
 h1 {
