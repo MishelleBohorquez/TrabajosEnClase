@@ -42,7 +42,7 @@ header{
 .foto img{
     width: 130px;
     height: 130px;
-    border: 3px solid gray;
+    border: 3px solid rgb(158, 183, 216);
     border-radius: 15px;
 }
 
@@ -66,7 +66,7 @@ main{
 main p{
     padding-bottom: 8px;
     font-size: 15px;
-    color: #8f8989;
+    color: #c9c6c6;
 }
 
 footer{
@@ -78,4 +78,9 @@ footer{
 
 footer p{
     color: #686666;
+}
+
+.fa-solid.fa-address-book{
+    color: #ffffff;
+    width: 20px;
 }
