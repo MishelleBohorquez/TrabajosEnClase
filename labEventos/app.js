@@ -22,9 +22,9 @@ function actualizarContador() {
     contadorFila.textContent = enEspera.length;
 }
 
-// Paso 1 y 3
+// Paso 1, 3, 5 y 6: Pintar la fila
 function pintarFila() {
-    
+
     listaEspera.innerHTML = "";
 
     for (let i = 0; i < turnos.length; i++) {
@@ -33,6 +33,9 @@ function pintarFila() {
         const li = document.createElement("li");
         li.classList.add("turno");
 
+        // Paso 5: Guardar en cada li el código del turno y su módulo usando dataset
+        li.dataset.codigo = turno.codigo;
+        li.dataset.modulo = turno.modulo;
 
         // Paso 3: Revisar si la propiedad atendido es verdadera y agregar la clase
         if (turno.atendido === true) {
@@ -46,6 +49,39 @@ function pintarFila() {
         const divDatos = document.createElement("div");
         divDatos.classList.add("turno__datos");
 
+        const pNombre = document.createElement("p");
+        pNombre.classList.add("turno__nombre");
+        pNombre.textContent = turno.nombre;
+
+        const pTramite = document.createElement("p");
+        pTramite.classList.add("turno__tramite");
+        pTramite.textContent = turno.tramite;
+
+        divDatos.appendChild(pNombre);
+        divDatos.appendChild(pTramite);
+
+        const spanEstado = document.createElement("span");
+        spanEstado.classList.add("turno__estado");
+
+        if (turno.atendido === true) {
+            spanEstado.textContent = "Atendido";
+        } else {
+            spanEstado.textContent = "En espera";
+        }
+
+        // Paso 6: Crear botón para cancelar
+        const btnCancelar = document.createElement("button");
+        btnCancelar.classList.add("turno__cancelar");
+        btnCancelar.textContent = "Cancelar";
+        btnCancelar.dataset.accion = "cancelar";
+
+        // árbol DOM
+        li.appendChild(spanCodigo);
+        li.appendChild(divDatos);
+        li.appendChild(spanEstado);
+        li.appendChild(btnCancelar);
+
+        listaEspera.appendChild(li);
     }
 
     actualizarContador();
@@ -72,3 +108,42 @@ function llamarSiguiente() {
 }
 
 btnLlamar.addEventListener("click", llamarSiguiente);
+
+// Paso 6: Delegación de eventos
+listaEspera.addEventListener("click", function (evento) {
+    if (evento.target.dataset.accion === "cancelar") {
+        const liPadre = evento.target.parentElement;
+        const codigoABorrar = liPadre.dataset.codigo;
+
+        for (let i = 0; i < turnos.length; i++) {
+            if (turnos[i].codigo === codigoABorrar) {
+                turnos.splice(i, 1);
+                break;
+            }
+        }
+
+        pintarFila();
+        aplicarBusqueda();
+    }
+});
+
+// Paso 7: Búsqueda en vivo
+function aplicarBusqueda() {
+    const textoBuscado = buscador.value.toLowerCase();
+    const elementosTurno = document.querySelectorAll(".turno");
+
+    for (let i = 0; i < elementosTurno.length; i++) {
+        const elemento = elementosTurno[i];
+        const textoElemento = elemento.textContent.toLowerCase();
+
+        if (textoElemento.includes(textoBuscado)) {
+            elemento.classList.remove("turno--oculto");
+        } else {
+            elemento.classList.add("turno--oculto");
+        }
+    }
+}
+
+buscador.addEventListener("input", aplicarBusqueda);
+
+pintarFila();
